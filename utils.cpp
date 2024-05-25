@@ -1,6 +1,3 @@
-
-// move matrix functions here
-
 #include "utils.h"
 
 void transpose(int matrix[BLOCK_DIM][BLOCK_DIM], int transpose[BLOCK_DIM][BLOCK_DIM]) {

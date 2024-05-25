@@ -1,7 +1,6 @@
 #include <iostream>
 #include <ncurses.h>
 #include <array>
-#include <algorithm>
 #include "utils.h"
 using namespace std;
 
@@ -24,7 +23,7 @@ class Tetromino {
 
     public:
         Tetromino() : x_pos(3), y_pos(0), moving(false) {}
-        
+
         virtual ~Tetromino() = default;
 
         // void render() {
@@ -50,18 +49,28 @@ class Tetromino {
         // void drop() {
         // }
 
-        void rotate(int matrix[BLOCK_DIM][BLOCK_DIM], int input) {
+        void rotate(int input) {
 
             int transposed[BLOCK_DIM][BLOCK_DIM] = {};
-            transpose(matrix, transposed);
+            transpose(shape, transposed);
 
             if (input == CLOCKWISE) {
-                row_flip(matrix);
+                row_flip(shape);
             }
             else if (input == COUNTER_CLOCKWISE) {
-                col_flip(matrix);
+                col_flip(shape);
             }
         }
+
+        void print_shape() {
+            for (int y = 0; y < BLOCK_DIM; y++) {
+                for (int x = 0; x < BLOCK_DIM; x++) {
+                    cout << shape[y][x] << " ";
+                }
+                cout << endl;
+            }
+        }
+
 };
 
 class O_Block : public Tetromino {
@@ -188,6 +197,19 @@ std::unique_ptr<Tetromino> generateTetromino() {
 }
 
 int main() {
+
+    std::srand(static_cast<unsigned>(std::time(nullptr)));
+    cout << "\n";
+    std::unique_ptr<Tetromino> block = generateTetromino();
+    cout << "\n\n";
+    block->print_shape();
+
+
+    block->rotate(CLOCKWISE);
+    cout << "\n\n";
+    block->print_shape();
+
+    return 0;
 
 
 
