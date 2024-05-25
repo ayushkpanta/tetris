@@ -1,7 +1,8 @@
 #include <iostream>
 #include <ncurses.h>
 #include <array>
-// #include <unique>
+#include <algorithm>
+#include "utils.h"
 using namespace std;
 
 // uses ncurses
@@ -14,15 +15,17 @@ using namespace std;
 #define QUIT              113 // "q"
 #define DROP              109 // "m"
 
-const int BLOCK_DIM = 4;
-
 class Tetromino {
-    int** shape;
-    int x_pos = 3;
-    int y_pos = 0;
-    bool moving = false; // true when start rendering (false after collision)
+    protected:
+        int shape[BLOCK_DIM][BLOCK_DIM];
+        int x_pos;
+        int y_pos;
+        bool moving;
 
     public:
+        Tetromino() : x_pos(3), y_pos(0), moving(false) {}
+        
+        virtual ~Tetromino() = default;
 
         // void render() {
         // }
@@ -47,7 +50,7 @@ class Tetromino {
         // void drop() {
         // }
 
-        void rotate(int matrix, int input) {
+        void rotate(int matrix[BLOCK_DIM][BLOCK_DIM], int input) {
 
             int transposed[BLOCK_DIM][BLOCK_DIM] = {};
             transpose(matrix, transposed);
@@ -59,108 +62,91 @@ class Tetromino {
                 col_flip(matrix);
             }
         }
-
-}
-
-
-void transpose(int matrix[BLOCK_DIM][BLOCK_DIM], int transpose[BLOCK_DIM][BLOCK_DIM]) {
-    for (int y = 0; y < BLOCK_DIM; y++) {
-        for (int x = 0; x < BLOCK_DIM; x++){
-            transpose[y][x] = matrix[y][x];
-        }
-    }
-}
-
-void row_flip(int matrix[BLOCK_DIM][BLOCK_DIM]) {
-    for (int y = 0; y < BLOCK_DIM; y++) {
-        for (int x = 0; x < BLOCK_DIM / 2; x++){
-            int temp = matrix[y][x];
-            matrix[y][x] = matrix[y][BLOCK_DIM - 1 - x];
-            matrix[y][BLOCK_DIM - 1 - x] = temp;
-        }
-    }
-}
-
-void col_flip(int matrix[BLOCK_DIM][BLOCK_DIM]) {
-    for (int x = 0; x < BLOCK_DIM; x++) {
-        for (int y = 0; y < BLOCK_DIM / 2; y++){
-            int temp = matrix[y][x];
-            matrix[y][x] = matrix[BLOCK_DIM - 1 -y][x];
-            matrix[BLOCK_DIM - 1 -y][x] = temp;
-        }
-    }
-}
+};
 
 class O_Block : public Tetromino {
     public:
         O_Block() {
-            shape = {{0,1,1,0},
-                     {0,1,1,0},
-                     {0,0,0,0},
-                     {0,0,0,0}}
+            int sub_shape[BLOCK_DIM][BLOCK_DIM] = {{0,1,1,0},
+                                                   {0,1,1,0},
+                                                   {0,0,0,0},
+                                                   {0,0,0,0}};
+            std::copy(&sub_shape[0][0], &sub_shape[0][0] + BLOCK_DIM * BLOCK_DIM, &shape[0][0]);
         }
-}
+};
+
 class I_Block : public Tetromino {
     public:
         I_Block() {
-            shape = {{1,1,1,1},
-                     {0,0,0,0},
-                     {0,0,0,0},
-                     {0,0,0,0}}
+            int sub_shape[BLOCK_DIM][BLOCK_DIM] = {{1,1,1,1},
+                                                   {0,0,0,0},
+                                                   {0,0,0,0},
+                                                   {0,0,0,0}};
+            std::copy(&sub_shape[0][0], &sub_shape[0][0] + BLOCK_DIM * BLOCK_DIM, &shape[0][0]);
         }
-}
+};
+
 class S_Block : public Tetromino {
     public:
         S_Block() {
-            shape = {{0,0,1,1},
-                     {1,1,0,0},
-                     {0,0,0,0},
-                     {0,0,0,0}}
+            int sub_shape[BLOCK_DIM][BLOCK_DIM] = {{0,0,1,1},
+                                                   {1,1,0,0},
+                                                   {0,0,0,0},
+                                                   {0,0,0,0}};
+            std::copy(&sub_shape[0][0], &sub_shape[0][0] + BLOCK_DIM * BLOCK_DIM, &shape[0][0]);
         }
-}
+};
+
 class Z_Block : public Tetromino {
     public:
         Z_Block() {
-            shape = {{1,1,0,0},
-                     {0,0,1,1},
-                     {0,0,0,0},
-                     {0,0,0,0}}
+            int sub_shape[BLOCK_DIM][BLOCK_DIM] = {{1,1,0,0},
+                                                   {0,0,1,1},
+                                                   {0,0,0,0},
+                                                   {0,0,0,0}};
+            std::copy(&sub_shape[0][0], &sub_shape[0][0] + BLOCK_DIM * BLOCK_DIM, &shape[0][0]);
         }
-}
+};
+
 class L_Block : public Tetromino {
     public:
         L_Block() {
-            shape = {{1,1,1,0},
-                     {1,0,0,0},
-                     {0,0,0,0},
-                     {0,0,0,0}}
+            int sub_shape[BLOCK_DIM][BLOCK_DIM] = {{1,1,1,0},
+                                                   {1,0,0,0},
+                                                   {0,0,0,0},
+                                                   {0,0,0,0}};
+            std::copy(&sub_shape[0][0], &sub_shape[0][0] + BLOCK_DIM * BLOCK_DIM, &shape[0][0]);
         }
-}
+};
+
 class J_Block : public Tetromino {
     public:
         J_Block() {
-            shape = {{1,1,1,0},
-                     {0,0,1,0},
-                     {0,0,0,0},
-                     {0,0,0,0}}
+            int sub_shape[BLOCK_DIM][BLOCK_DIM] = {{1,1,1,0},
+                                                   {0,0,1,0},
+                                                   {0,0,0,0},
+                                                   {0,0,0,0}};
+            std::copy(&sub_shape[0][0], &sub_shape[0][0] + BLOCK_DIM * BLOCK_DIM, &shape[0][0]);
         }
-}
+};
+
 class T_Block : public Tetromino {
     public:
         T_Block() {
-            shape = {{1,1,1,0},
-                     {0,1,0,0},
-                     {0,0,0,0},
-                     {0,0,0,0}}
+            int sub_shape[BLOCK_DIM][BLOCK_DIM] = {{1,1,1,0},
+                                                   {0,1,0,0},
+                                                   {0,0,0,0},
+                                                   {0,0,0,0}};
+            std::copy(&sub_shape[0][0], &sub_shape[0][0] + BLOCK_DIM * BLOCK_DIM, &shape[0][0]);
         }
-}
+};
 
 
 // dynamically allocated, will need to delete objects in game loop...
 
 std::unique_ptr<Tetromino> generateTetromino() {
 
-    std::array<char> shapes{'O','I','S','Z','L','J','T'};
+    std::array<char, 7> shapes = {'O','I','S','Z','L','J','T'};
     char shape = shapes[rand() % shapes.size()];
 
     Tetromino block;
@@ -168,28 +154,41 @@ std::unique_ptr<Tetromino> generateTetromino() {
 
     switch(shape) {
         case 'O':
-            ptr = std::make_unique<O_Block>();
+            // ptr = std::make_unique<O_Block>();
+            ptr = std::unique_ptr<O_Block>(new O_Block());
             break;
         case 'I':
-            ptr = std::make_unique<I_Block>();
+            // ptr = std::make_unique<I_Block>();
+            ptr = std::unique_ptr<I_Block>(new I_Block());
             break;
         case 'S':
-            ptr = std::make_unique<S_Block>();
+            // ptr = std::make_unique<S_Block>();
+            ptr = std::unique_ptr<S_Block>(new S_Block());
             break;
         case 'Z':
-            ptr = std::make_unique<Z_Block>();
+            // ptr = std::make_unique<Z_Block>();
+            ptr = std::unique_ptr<Z_Block>(new Z_Block());
             break;
         case 'L':
-            ptr = std::make_unique<L_Block>();
+            // ptr = std::make_unique<L_Block>();
+            ptr = std::unique_ptr<L_Block>(new L_Block());
             break;
         case 'J':
-            ptr = std::make_unique<J_Block>();
+            // ptr = std::make_unique<J_Block>();
+            ptr = std::unique_ptr<J_Block>(new J_Block());
             break;
         case 'T':
-            ptr = std::make_unique<T_Block>();
+            // ptr = std::make_unique<T_Block>();
+            ptr = std::unique_ptr<T_Block>(new T_Block());
             break;
     }
 
     std::cout << shape;
     return ptr;
+}
+
+int main() {
+
+
+
 }
