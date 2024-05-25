@@ -1,7 +1,7 @@
 #include <iostream>
 #include <ncurses.h>
 #include <array>
-#include <unioqu>
+// #include <unique>
 using namespace std;
 
 // uses ncurses
@@ -29,49 +29,66 @@ class Tetromino {
 
         // link with clock later
         void tick_move() {
-            y_pos += 1
+            y_pos += 1;
         }
 
         void player_move(int input) {
             if (input == DOWN_ARROW) {
-                y_pos += 1
+                y_pos += 1;
             }
             else if (input == RIGHT_ARROW) {
-                x_pos += 1
+                x_pos += 1;
             }
             else if (input == LEFT_ARROW) {
-                x_pos -= 1
+                x_pos -= 1;
             }
         }
 
         // void drop() {
         // }
 
-        void rotate(int matrix) {
+        void rotate(int matrix, int input) {
 
-            // transpose matrix
             int transposed[BLOCK_DIM][BLOCK_DIM] = {};
-            transposed = transpose(matrix, transposed);
+            transpose(matrix, transposed);
 
-            // swap rows or columns
             if (input == CLOCKWISE) {
-
+                row_flip(matrix);
             }
             else if (input == COUNTER_CLOCKWISE) {
-
+                col_flip(matrix);
             }
         }
 
 }
 
 
-int** transpose(int matrix[BLOCK_DIM][BLOCK_DIM], int transpose[BLOCK_DIM][BLOCK_DIM];) {
+void transpose(int matrix[BLOCK_DIM][BLOCK_DIM], int transpose[BLOCK_DIM][BLOCK_DIM]) {
     for (int y = 0; y < BLOCK_DIM; y++) {
         for (int x = 0; x < BLOCK_DIM; x++){
             transpose[y][x] = matrix[y][x];
         }
     }
-    return transpose;
+}
+
+void row_flip(int matrix[BLOCK_DIM][BLOCK_DIM]) {
+    for (int y = 0; y < BLOCK_DIM; y++) {
+        for (int x = 0; x < BLOCK_DIM / 2; x++){
+            int temp = matrix[y][x];
+            matrix[y][x] = matrix[y][BLOCK_DIM - 1 - x];
+            matrix[y][BLOCK_DIM - 1 - x] = temp;
+        }
+    }
+}
+
+void col_flip(int matrix[BLOCK_DIM][BLOCK_DIM]) {
+    for (int x = 0; x < BLOCK_DIM; x++) {
+        for (int y = 0; y < BLOCK_DIM / 2; y++){
+            int temp = matrix[y][x];
+            matrix[y][x] = matrix[BLOCK_DIM - 1 -y][x];
+            matrix[BLOCK_DIM - 1 -y][x] = temp;
+        }
+    }
 }
 
 class O_Block : public Tetromino {
