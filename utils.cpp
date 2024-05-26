@@ -1,4 +1,7 @@
 #include "utils.h"
+#include <iostream>
+using namespace std;
+
 
 void transpose(int matrix[BLOCK_DIM][BLOCK_DIM], int transpose[BLOCK_DIM][BLOCK_DIM]) {
     for (int y = 0; y < BLOCK_DIM; y++) {
@@ -25,5 +28,14 @@ void col_flip(int matrix[BLOCK_DIM][BLOCK_DIM]) {
             matrix[y][x] = matrix[BLOCK_DIM - 1 -y][x];
             matrix[BLOCK_DIM - 1 -y][x] = temp;
         }
+    }
+}
+
+void print_tetromino(int matrix[BLOCK_DIM][BLOCK_DIM]) {
+    for (int y = 0; y < BLOCK_DIM; y++) {
+            for (int x = 0; x < BLOCK_DIM; x++) {
+                cout << matrix[y][x] << " ";
+            }
+        cout << endl;
     }
 }

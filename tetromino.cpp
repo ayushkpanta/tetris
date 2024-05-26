@@ -64,12 +64,7 @@ class Tetromino {
         }
 
         void print_shape() {
-            for (int y = 0; y < BLOCK_DIM; y++) {
-                for (int x = 0; x < BLOCK_DIM; x++) {
-                    cout << shape[y][x] << " ";
-                }
-                cout << endl;
-            }
+            print_tetromino(shape);
         }
 
 };
