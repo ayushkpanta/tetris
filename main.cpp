@@ -1,23 +1,16 @@
 
+#include "utils.h"
 
-// const int BOARD_WIDTH = 10;
-// const int BOARD_HEIGHT = 20;
+int main() {
 
-// int main() {
+    int board[BOARD_HEIGHT][BOARD_WIDTH] = {};
+    for (int y = 0; y < BOARD_HEIGHT; y++) {
+         for (int x = 0; x < BOARD_WIDTH; x++) {
+            if (y == 0 || y == BOARD_HEIGHT - 1 || x == 0 || x == BOARD_WIDTH - 1) {
+                board[y][x] = 1;
+            }
+         }
+    }
 
-//     int board[BOARD_WIDTH][BOARD_HEIGHT] = {}
-//     for (int y = 0; y < BOARD_HEIGHT; y++) {
-//          for (int x = 0; y < BOARD_WIDTH; x++) {
-//             if (y == 0 || y == BOARD_HEIGHT) {
-
-
-//             }
-//             if (x == 0 || y == BOARD_WIDTH) {
-
-//             }
-
-        
-//          }
-//     }
-
-// }
+    print_matrix(board);
+}

@@ -64,7 +64,7 @@ class Tetromino {
         }
 
         void print_shape() {
-            print_tetromino(shape);
+            print_matrix(shape);
         }
 
 };
@@ -183,31 +183,31 @@ std::unique_ptr<Tetromino> generateTetromino() {
     return ptr;
 }
 
-int main() {
+// int main() {
 
-    std::srand(static_cast<unsigned>(std::time(nullptr)));
-    cout << "\n";
-    std::unique_ptr<Tetromino> block = generateTetromino();
-    cout << "\n\n";
-    block->print_shape();
-
-
-    block->rotate(CLOCKWISE);
-    cout << "\n\n";
-    block->print_shape();
-
-    block->rotate(COUNTER_CLOCKWISE);
-    cout << "\n\n";
-    block->print_shape();
-
-    block->rotate(COUNTER_CLOCKWISE);
-    cout << "\n\n";
-    block->print_shape();
+//     std::srand(static_cast<unsigned>(std::time(nullptr)));
+//     cout << "\n";
+//     std::unique_ptr<Tetromino> block = generateTetromino();
+//     cout << "\n\n";
+//     block->print_shape();
 
 
-    return 0;
+//     block->rotate(CLOCKWISE);
+//     cout << "\n\n";
+//     block->print_shape();
+
+//     block->rotate(COUNTER_CLOCKWISE);
+//     cout << "\n\n";
+//     block->print_shape();
+
+//     block->rotate(COUNTER_CLOCKWISE);
+//     cout << "\n\n";
+//     block->print_shape();
 
 
-}
+//     return 0;
+
+
+// }
 
 // clang++ -o tetris tetromino.cpp utils.cpp && ./tetris
