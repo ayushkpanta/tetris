@@ -158,37 +158,28 @@ std::unique_ptr<Tetromino> generateTetromino() {
 
     std::array<char, 7> shapes = {'O','I','S','Z','L','J','T'};
     char shape = shapes[rand() % shapes.size()];
-
-    Tetromino block;
     unique_ptr<Tetromino> ptr;
 
     switch(shape) {
         case 'O':
-            // ptr = std::make_unique<O_Block>();
             ptr = std::unique_ptr<O_Block>(new O_Block());
             break;
         case 'I':
-            // ptr = std::make_unique<I_Block>();
             ptr = std::unique_ptr<I_Block>(new I_Block());
             break;
         case 'S':
-            // ptr = std::make_unique<S_Block>();
             ptr = std::unique_ptr<S_Block>(new S_Block());
             break;
         case 'Z':
-            // ptr = std::make_unique<Z_Block>();
             ptr = std::unique_ptr<Z_Block>(new Z_Block());
             break;
         case 'L':
-            // ptr = std::make_unique<L_Block>();
             ptr = std::unique_ptr<L_Block>(new L_Block());
             break;
         case 'J':
-            // ptr = std::make_unique<J_Block>();
             ptr = std::unique_ptr<J_Block>(new J_Block());
             break;
         case 'T':
-            // ptr = std::make_unique<T_Block>();
             ptr = std::unique_ptr<T_Block>(new T_Block());
             break;
     }
