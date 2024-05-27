@@ -16,7 +16,7 @@ using namespace std;
 
 class Tetromino {
     protected:
-        int shape[BLOCK_DIM][BLOCK_DIM];
+        char shape[BLOCK_DIM][BLOCK_DIM];
         int x_pos;
         int y_pos;
         bool moving;
@@ -51,7 +51,7 @@ class Tetromino {
 
         void rotate(int input) {
 
-            int transposed[BLOCK_DIM][BLOCK_DIM] = {};
+            char transposed[BLOCK_DIM][BLOCK_DIM] = {};
             transpose(shape, transposed);
             std::copy(&transposed[0][0], &transposed[0][0] + BLOCK_DIM * BLOCK_DIM, &shape[0][0]);
 
@@ -72,10 +72,10 @@ class Tetromino {
 class O_Block : public Tetromino {
     public:
         O_Block() {
-            int sub_shape[BLOCK_DIM][BLOCK_DIM] = {{0,1,1,0},
-                                                   {0,1,1,0},
-                                                   {0,0,0,0},
-                                                   {0,0,0,0}};
+            char sub_shape[BLOCK_DIM][BLOCK_DIM] = {{' ','#','#',' '},
+                                                    {' ','#','#',' '},
+                                                    {' ',' ',' ',' '},
+                                                    {' ',' ',' ',' '}};
             std::copy(&sub_shape[0][0], &sub_shape[0][0] + BLOCK_DIM * BLOCK_DIM, &shape[0][0]);
         }
 };
@@ -83,10 +83,10 @@ class O_Block : public Tetromino {
 class I_Block : public Tetromino {
     public:
         I_Block() {
-            int sub_shape[BLOCK_DIM][BLOCK_DIM] = {{1,1,1,1},
-                                                   {0,0,0,0},
-                                                   {0,0,0,0},
-                                                   {0,0,0,0}};
+            char sub_shape[BLOCK_DIM][BLOCK_DIM] = {{'#','#','#','#'},
+                                                   {' ',' ',' ',' '},
+                                                   {' ',' ',' ',' '},
+                                                   {' ',' ',' ',' '}};
             std::copy(&sub_shape[0][0], &sub_shape[0][0] + BLOCK_DIM * BLOCK_DIM, &shape[0][0]);
         }
 };
@@ -94,10 +94,10 @@ class I_Block : public Tetromino {
 class S_Block : public Tetromino {
     public:
         S_Block() {
-            int sub_shape[BLOCK_DIM][BLOCK_DIM] = {{0,1,1,0},
-                                                   {1,1,0,0},
-                                                   {0,0,0,0},
-                                                   {0,0,0,0}};
+            char sub_shape[BLOCK_DIM][BLOCK_DIM] = {{' ','#','#',' '},
+                                                    {'#','#',' ',' '},
+                                                    {' ',' ',' ',' '},
+                                                    {' ',' ',' ',' '}};
             std::copy(&sub_shape[0][0], &sub_shape[0][0] + BLOCK_DIM * BLOCK_DIM, &shape[0][0]);
         }
 };
@@ -105,10 +105,10 @@ class S_Block : public Tetromino {
 class Z_Block : public Tetromino {
     public:
         Z_Block() {
-            int sub_shape[BLOCK_DIM][BLOCK_DIM] = {{1,1,0,0},
-                                                   {0,1,1,0},
-                                                   {0,0,0,0},
-                                                   {0,0,0,0}};
+            char sub_shape[BLOCK_DIM][BLOCK_DIM] = {{'#','#',' ',' '},
+                                                    {' ','#','#',' '},
+                                                    {' ',' ',' ',' '},
+                                                    {' ',' ',' ',' '}};
             std::copy(&sub_shape[0][0], &sub_shape[0][0] + BLOCK_DIM * BLOCK_DIM, &shape[0][0]);
         }
 };
@@ -116,10 +116,10 @@ class Z_Block : public Tetromino {
 class L_Block : public Tetromino {
     public:
         L_Block() {
-            int sub_shape[BLOCK_DIM][BLOCK_DIM] = {{0,0,1,0},
-                                                   {1,1,1,0},
-                                                   {0,0,0,0},
-                                                   {0,0,0,0}};
+            char sub_shape[BLOCK_DIM][BLOCK_DIM] = {{'#',' ',' ',' '},
+                                                    {'#','#','#',' '},
+                                                    {' ',' ',' ',' '},
+                                                    {' ',' ',' ',' '}};
             std::copy(&sub_shape[0][0], &sub_shape[0][0] + BLOCK_DIM * BLOCK_DIM, &shape[0][0]);
         }
 };
@@ -127,10 +127,10 @@ class L_Block : public Tetromino {
 class J_Block : public Tetromino {
     public:
         J_Block() {
-            int sub_shape[BLOCK_DIM][BLOCK_DIM] = {{1,0,0,0},
-                                                   {1,1,1,0},
-                                                   {0,0,0,0},
-                                                   {0,0,0,0}};
+            char sub_shape[BLOCK_DIM][BLOCK_DIM] = {{' ',' ','#',' '},
+                                                    {'#','#','#',' '},
+                                                    {' ',' ',' ',' '},
+                                                    {' ',' ',' ',' '}};
             std::copy(&sub_shape[0][0], &sub_shape[0][0] + BLOCK_DIM * BLOCK_DIM, &shape[0][0]);
         }
 };
@@ -138,10 +138,10 @@ class J_Block : public Tetromino {
 class T_Block : public Tetromino {
     public:
         T_Block() {
-            int sub_shape[BLOCK_DIM][BLOCK_DIM] = {{1,1,1,0},
-                                                   {0,1,0,0},
-                                                   {0,0,0,0},
-                                                   {0,0,0,0}};
+            char sub_shape[BLOCK_DIM][BLOCK_DIM] = {{'#','#','#',' '},
+                                                    {' ','#',' ',' '},
+                                                    {' ',' ',' ',' '},
+                                                    {' ',' ',' ',' '}};
             std::copy(&sub_shape[0][0], &sub_shape[0][0] + BLOCK_DIM * BLOCK_DIM, &shape[0][0]);
         }
 };
