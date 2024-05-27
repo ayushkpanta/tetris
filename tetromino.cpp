@@ -2,6 +2,7 @@
 #include <ncurses.h>
 #include <array>
 #include "utils.h"
+// #include "tetromino.h"
 using namespace std;
 
 // uses ncurses
@@ -183,31 +184,43 @@ std::unique_ptr<Tetromino> generateTetromino() {
     return ptr;
 }
 
-// int main() {
+int main() {
 
-//     std::srand(static_cast<unsigned>(std::time(nullptr)));
-//     cout << "\n";
-//     std::unique_ptr<Tetromino> block = generateTetromino();
-//     cout << "\n\n";
-//     block->print_shape();
+        char board[BOARD_HEIGHT][BOARD_WIDTH];
+    for (int y = 0; y < BOARD_HEIGHT; y++) {
+         for (int x = 0; x < BOARD_WIDTH; x++) {
+            if (y == 0 || y == BOARD_HEIGHT - 1 || x == 0 || x == BOARD_WIDTH - 1) {
+                board[y][x] = '@';
+            }
+            else {
+                board[y][x] = ' ';
+            }
+         }
+    }
+    print_matrix(board);
+
+    std::srand(static_cast<unsigned>(std::time(nullptr)));
+    cout << "\n";
+    std::unique_ptr<Tetromino> block = generateTetromino();
+    cout << "\n\n";
+    block->print_shape();
+
+    block->rotate(CLOCKWISE);
+    cout << "\n\n";
+    block->print_shape();
+
+    block->rotate(COUNTER_CLOCKWISE);
+    cout << "\n\n";
+    block->print_shape();
+
+    block->rotate(COUNTER_CLOCKWISE);
+    cout << "\n\n";
+    block->print_shape();
 
 
-//     block->rotate(CLOCKWISE);
-//     cout << "\n\n";
-//     block->print_shape();
-
-//     block->rotate(COUNTER_CLOCKWISE);
-//     cout << "\n\n";
-//     block->print_shape();
-
-//     block->rotate(COUNTER_CLOCKWISE);
-//     cout << "\n\n";
-//     block->print_shape();
+    return 0;
 
 
-//     return 0;
-
-
-// }
+}
 
 // clang++ -o tetris tetromino.cpp utils.cpp && ./tetris

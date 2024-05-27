@@ -14,6 +14,16 @@ int main() {
             }
          }
     }
-
     print_matrix(board);
+
+    std::srand(static_cast<unsigned>(std::time(nullptr)));
+    cout << "\n";
+    std::unique_ptr<Tetromino> block = generateTetromino();
+    cout << "\n\n";
+    block->print_shape();
+
+
+    
+
+
 }
