@@ -1,6 +1,8 @@
 #include <iostream>
 #include <ncurses.h>
 #include <array>
+#include <thread>
+#include <chrono>
 #include "utils.h"
 // #include "tetromino.h"
 using namespace std;
@@ -23,7 +25,7 @@ class Tetromino {
         bool moving;
 
     public:
-        Tetromino() : x_pos(3), y_pos(0), moving(false) {}
+        Tetromino() : x_pos(3), y_pos(1), moving(false) {}
 
         virtual ~Tetromino() = default;
 
@@ -66,6 +68,24 @@ class Tetromino {
 
         void print_shape() {
             print_matrix(shape);
+        }
+
+        void draw_or_clear_from_board(char board[BOARD_HEIGHT][BOARD_WIDTH], bool draw) {
+            for (int y = 0; y < BLOCK_DIM; y++) {
+                for (int x = 0; x < BLOCK_DIM; x++) {
+                    if (shape[y][x] == '#') {
+                        int board_x = x_pos + x;
+                        int board_y = y_pos + y;
+                        if (board_y > 0 && board_y < BOARD_HEIGHT && board_x > 0 && board_x < BOARD_WIDTH) {
+                            if (draw) {
+                                board[board_y][board_x] = shape[y][x];
+                            } else {
+                                board[board_y][board_x] = ' ';
+                            }
+                        }
+                    }
+                }
+            }           
         }
 
 };
@@ -180,13 +200,17 @@ std::unique_ptr<Tetromino> generateTetromino() {
             break;
     }
 
-    std::cout << shape;
+    // std::cout << shape;
     return ptr;
 }
 
+
 int main() {
 
-        char board[BOARD_HEIGHT][BOARD_WIDTH];
+    const int tickRate = 500;
+    bool gameOver = false;
+
+    char board[BOARD_HEIGHT][BOARD_WIDTH];
     for (int y = 0; y < BOARD_HEIGHT; y++) {
          for (int x = 0; x < BOARD_WIDTH; x++) {
             if (y == 0 || y == BOARD_HEIGHT - 1 || x == 0 || x == BOARD_WIDTH - 1) {
@@ -197,26 +221,29 @@ int main() {
             }
          }
     }
-    print_matrix(board);
+    // print_matrix(board);
 
     std::srand(static_cast<unsigned>(std::time(nullptr)));
-    cout << "\n";
+
     std::unique_ptr<Tetromino> block = generateTetromino();
-    cout << "\n\n";
-    block->print_shape();
 
-    block->rotate(CLOCKWISE);
-    cout << "\n\n";
-    block->print_shape();
+    block->draw_or_clear_from_board(board, true);
+    cout << "\n";
+    print_matrix(board);
 
-    block->rotate(COUNTER_CLOCKWISE);
-    cout << "\n\n";
-    block->print_shape();
+    // while (!gameOver) {
 
-    block->rotate(COUNTER_CLOCKWISE);
-    cout << "\n\n";
-    block->print_shape();
+    //     system("clear");
 
+    //     block->draw_or_clear_from_board(board, false);
+    //     block->tick_move();
+    //     block->draw_or_clear_from_board(board, true);
+
+    //     print_matrix(board);
+
+    //     std::this_thread::sleep_for(std::chrono::milliseconds(tickRate));
+
+    // }
 
     return 0;
 

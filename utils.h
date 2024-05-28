@@ -5,8 +5,8 @@
 using namespace std;
 
 const int BLOCK_DIM = 4;
-const int BOARD_WIDTH = 10;
-const int BOARD_HEIGHT = 20;
+const int BOARD_WIDTH = 12;
+const int BOARD_HEIGHT = 22;
 
 void transpose(char matrix[BLOCK_DIM][BLOCK_DIM], char transpose[BLOCK_DIM][BLOCK_DIM]);
 void row_flip(char matrix[BLOCK_DIM][BLOCK_DIM]);
